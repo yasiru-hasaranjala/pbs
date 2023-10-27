@@ -15,14 +15,8 @@ class Map extends StatefulWidget {
 
 class MapState extends State<Map> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-  final databaseReference = FirebaseDatabase.instance.ref('Location/Latitude');
   final ref = FirebaseDatabase.instance.ref();
   Set<Marker> markers = {};
-
-  var marker = const Marker(
-    markerId: MarkerId('1'),
-    position: LatLng(6.927079, 79.861244),
-  );
 
   final _auth = FirebaseAuth.instance;
   late User loggedinUser;

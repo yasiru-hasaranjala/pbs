@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pbs/shared/components/components.dart';
@@ -11,6 +12,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final ref = FirebaseDatabase.instance.ref('Users');
+
   final name = TextEditingController();
 
   final email = TextEditingController();
@@ -145,6 +148,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       final newUser = await _auth.createUserWithEmailAndPassword(
                           email: email.text, password: password);
                       if (newUser != null) {
+                        final uid = newUser.user?.uid.toString();
+                        await ref.set({
+                          "$uid": {
+                            "Name": name.text,
+                            "Subscription": 0,
+                            "Review": "",
+                          }
+                        });
                         Navigator.pushNamed(context, 'menu_screen');
                       }
                     } catch (e) {

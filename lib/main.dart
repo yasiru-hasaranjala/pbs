@@ -5,6 +5,8 @@ import 'package:pbs/modules/login/login.dart';
 import 'package:pbs/modules/map/map.dart';
 import 'package:pbs/modules/menu/qr.dart';
 import 'package:pbs/modules/signup/signup.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'modules/menu/menu.dart';
 
@@ -18,6 +20,9 @@ void main() async {
           projectId:'pbssystem-8e742'
       )
   );
+
+  Stripe.publishableKey = "pk_test_51O5tykFFFOqljVv9BUxhAhv0ch2a4YwR5HtmKeSkoTT8BWzTZ9vblcGAL71TL0yTUbXLGyok3ng5h10QBZdVV82Y00LJisNQdY";
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 
