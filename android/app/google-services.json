@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "590647446037",
+    "firebase_url": "https://pbssystem-8e742-default-rtdb.firebaseio.com",
+    "project_id": "pbssystem-8e742",
+    "storage_bucket": "pbssystem-8e742.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590647446037:android:13c9a72b1f1b9edff45c1c",
+        "android_client_info": {
+          "package_name": "com.example.pbs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRfDgsmg879j00Y3vdg2opqczEO7TT5K4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
