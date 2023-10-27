@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  final TextEditingController _textFieldController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref();
   late User loggedinUser;
@@ -124,19 +126,38 @@ class _MenuState extends State<Menu> {
                 const SizedBox(
                   height: 20,
                 ),
-                Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.indigo,
-                      elevation: 0,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.amber,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                        ),
+                        onPressed: () {
+                          _displayTextInputDialog(context);
+                        },
+                        child: const Text("Review", style: TextStyle(fontSize: 25,)),
+                      ),
                     ),
-                    onPressed: () {
-                      _auth.signOut();
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Log out", style: TextStyle(fontSize: 25,)),
-                  ),
+                    Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                        ),
+                        onPressed: () {
+                          _auth.signOut();
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Log out", style: TextStyle(fontSize: 25,)),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -144,5 +165,50 @@ class _MenuState extends State<Menu> {
         ),
       ),
     );
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    String? valueText;
+    return showDialog(
+        context: context,
+        builder: (context) {
+
+          return AlertDialog(
+            title: const Text('Enter your review'),
+            content: TextField(
+              onChanged: (value) {
+                setState(() {
+                  valueText = value;
+                });
+              },
+              controller: _textFieldController,
+              decoration:
+              const InputDecoration(hintText: "Text"),
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                color: Colors.red,
+                textColor: Colors.white,
+                child: const Text('Cancel'),
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              MaterialButton(
+                color: Colors.green,
+                textColor: Colors.white,
+                child: const Text('Submit'),
+                onPressed: () {
+                  //valueText
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+            ],
+          );
+        });
   }
 }
