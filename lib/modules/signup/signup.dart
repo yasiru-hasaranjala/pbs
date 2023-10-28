@@ -25,9 +25,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var formKey = GlobalKey<FormState>();
   String errorText = 'Can\'ot be empty';
 
+  var now = new DateTime.now();
+  late String dateT;
+
   @override
   void initState() {
     super.initState();
+
+    dateT = "${now.year}-${now.month}-${now.day}";
 
     name.addListener(() => setState(() {}));
     email.addListener(() => setState(() {}));
@@ -149,11 +154,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           email: email.text, password: password);
                       if (newUser != null) {
                         final uid = newUser.user?.uid.toString();
-                        await ref.set({
+                        await ref.update({
                           "$uid": {
                             "Name": name.text,
                             "Subscription": 0,
-                            "Review": "",
+                            "Review": "-",
+                            "email": email.text,
+                            "date": dateT,
                           }
                         });
                         Navigator.pushNamed(context, 'menu_screen');
