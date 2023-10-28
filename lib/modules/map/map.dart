@@ -21,9 +21,15 @@ class MapState extends State<Map> {
   final _auth = FirebaseAuth.instance;
   late User loggedinUser;
   bool lockLock = false;
+  late String uid;
+
+  var now = new DateTime.now();
+  late String dateT;
 
   void initState() {
     super.initState();
+    dateT = "${now.year}-${now.month}-${now.day}";
+
     getCurrentUser();
   }
 
@@ -33,6 +39,7 @@ class MapState extends State<Map> {
       final user = await _auth.currentUser;
       if (user != null) {
         loggedinUser = user;
+        uid = loggedinUser.uid.toString();
       }
     } catch (e) {
       if (kDebugMode) {
@@ -98,6 +105,9 @@ class MapState extends State<Map> {
               return const Text("Loading");
             }
 
+            double lat = double.parse(snap.data!.snapshot.child("Latitude").value.toString());
+            double long = double.parse(snap.data!.snapshot.child("Longitude").value.toString());
+
             String lock = snap.data!.snapshot.child("lock").value.toString();
 
             return Padding(
@@ -108,6 +118,10 @@ class MapState extends State<Map> {
                     ref.child('Location').update(
                       {"lock": 1}
                     );
+                    ref.child('Users/$uid').update({
+                        "Location": "($lat, $long)",
+                        "dateLock": dateT
+                    });
                 },
                 label: lock=='0'
                     ? const Text('Lock',style: TextStyle(color: Colors.green),)

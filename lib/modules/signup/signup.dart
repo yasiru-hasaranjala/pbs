@@ -39,6 +39,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
   final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
+  var errorMessage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,8 +161,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             "Name": name.text,
                             "Subscription": 0,
                             "Review": "-",
+                            "Location": "-",
                             "email": email.text,
                             "date": dateT,
+                            "bicycle": "b1",
+                            "dateLock": "-"
                           }
                         });
                         Navigator.pushNamed(context, 'menu_screen');
@@ -169,6 +174,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (kDebugMode) {
                         print(e);
                       }
+                      setState(() {
+                        errorMessage = e.toString();
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
                     }
                     setState(() {
                       showSpinner = false;
