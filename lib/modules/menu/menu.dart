@@ -296,7 +296,6 @@ class _MenuState extends State<Menu> {
           .then((value) {});
 
       //STEP 3: Display Payment sheet
-      await ref.child("Users/$uid/Subscription").set(1);
       displayPaymentSheet();
     } catch (err) {
       throw Exception(err);
@@ -322,7 +321,7 @@ class _MenuState extends State<Menu> {
                 ],
               ),
             ));
-
+        ref.child("Users/$uid/Subscription").set(1);
         paymentIntent = null;
       }).onError((error, stackTrace) {
         throw Exception(error);

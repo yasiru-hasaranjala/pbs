@@ -154,7 +154,7 @@ class _QRViewExampleState extends State<QRViewExample> {
           ref.child('Location').update(
               {"lock": 0}
           );
-          Navigator.pop(context);
+          Navigator.pushNamed(context, 'menu_screen');
         }
       });
     });
